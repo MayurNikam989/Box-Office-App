@@ -1,5 +1,7 @@
 import React, { useState } from "react";
+import ActorGrid from "../components/Actors/ActorGrid";
 import MainPageLayout from "../components/MainPageLayout";
+import ShowGrid from "../components/Shows/ShowGrid";
 // import { api_get } from "../misc/config";
 
 const Home = () => {
@@ -27,7 +29,7 @@ const Home = () => {
       .then((r) => r.json())
       .then((result) => {
         //consoles the results of search.
-        console.log(result);
+        //console.log(result);
         //storing the results states
         setResults(result);
       });
@@ -59,10 +61,10 @@ const Home = () => {
       //if search is about show then or if search is about people
       return results[0].show
         ? results.map((item) => {
-            return <div key={item.show.id}>{item.show.name}</div>;
+            return <ShowGrid key={item.show.id} data={results} />;
           })
         : results.map((item) => {
-            return <div key={item.person.id}>{item.person.name}</div>;
+            return <ActorGrid key={item.person.id} data={results} />;
           });
     }
     return null;
@@ -77,42 +79,44 @@ const Home = () => {
 
   return (
     <MainPageLayout>
-      <input
-        type="text"
-        onChange={onInputChange}
-        onKeyDown={onKeyDown}
-        value={input}
-      />
-
-      <br></br>
-      {/* adding selective search */}
-      <label htmlFor="search-shows">
-        Shows
-        <input
-          type="radio"
-          id="search-shows"
-          value="shows"
-          checked={isShowsSearch}
-          onChange={onRadioButtonChange}
-        />
-      </label>
-      <label htmlFor="search-actors">
-        Actors
-        <input
-          type="radio"
-          id="search-actors"
-          value="people"
-          checked={!isShowsSearch}
-          onChange={onRadioButtonChange}
-        />
-      </label>
-      <br></br>
-      <button onClick={onSearch}>Search</button>
       <div>
-        {
-          //renders result is fn to displayed results on app
-          renderResults(results)
-        }
+        <input
+          type="text"
+          onChange={onInputChange}
+          onKeyDown={onKeyDown}
+          value={input}
+        />
+
+        <br></br>
+        {/* adding selective search */}
+        <label htmlFor="search-shows">
+          Shows
+          <input
+            type="radio"
+            id="search-shows"
+            value="shows"
+            checked={isShowsSearch}
+            onChange={onRadioButtonChange}
+          />
+        </label>
+        <label htmlFor="search-actors">
+          Actors
+          <input
+            type="radio"
+            id="search-actors"
+            value="people"
+            checked={!isShowsSearch}
+            onChange={onRadioButtonChange}
+          />
+        </label>
+        <br></br>
+        <button onClick={onSearch}>Search</button>
+        <div>
+          {
+            //renders result is fn to displayed results on app
+            renderResults(results)
+          }
+        </div>
       </div>
     </MainPageLayout>
   );
