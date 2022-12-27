@@ -50,6 +50,7 @@ export const Headline = styled.div`
     align-items: center;
     .star {
       color: orange;
+      font-size: larger;
     }
     span {
       margin-left: 10px;

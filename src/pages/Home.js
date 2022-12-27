@@ -2,6 +2,11 @@ import React, { useState } from "react";
 import ActorGrid from "../components/Actors/ActorGrid";
 import MainPageLayout from "../components/MainPageLayout";
 import ShowGrid from "../components/Shows/ShowGrid";
+import {
+  RadioInputsWrapper,
+  SearchButtonWrapper,
+  SearchInput,
+} from "./Home.styled";
 // import { api_get } from "../misc/config";
 
 const Home = () => {
@@ -80,37 +85,47 @@ const Home = () => {
   return (
     <MainPageLayout>
       <div>
-        <input
+        <SearchInput
           type="text"
           onChange={onInputChange}
           onKeyDown={onKeyDown}
           value={input}
+          placeholder="Search Something"
         />
 
         <br></br>
         {/* adding selective search */}
-        <label htmlFor="search-shows">
-          Shows
-          <input
-            type="radio"
-            id="search-shows"
-            value="shows"
-            checked={isShowsSearch}
-            onChange={onRadioButtonChange}
-          />
-        </label>
-        <label htmlFor="search-actors">
-          Actors
-          <input
-            type="radio"
-            id="search-actors"
-            value="people"
-            checked={!isShowsSearch}
-            onChange={onRadioButtonChange}
-          />
-        </label>
+        <RadioInputsWrapper>
+          <div>
+            <label htmlFor="search-shows">
+              Shows
+              <input
+                type="radio"
+                id="search-shows"
+                value="shows"
+                checked={isShowsSearch}
+                onChange={onRadioButtonChange}
+              />
+            </label>
+          </div>
+          <div>
+            <label htmlFor="search-actors">
+              Actors
+              <input
+                type="radio"
+                id="search-actors"
+                value="people"
+                checked={!isShowsSearch}
+                onChange={onRadioButtonChange}
+              />
+            </label>
+          </div>
+        </RadioInputsWrapper>
         <br></br>
-        <button onClick={onSearch}>Search</button>
+        <SearchButtonWrapper>
+          <button onClick={onSearch}>Search</button>
+        </SearchButtonWrapper>
+
         <div>
           {
             //renders result is fn to displayed results on app

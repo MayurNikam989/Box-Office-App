@@ -2,11 +2,24 @@ import React from "react";
 import ShowCard from "./ShowCard";
 import IMG_NOT_FOUND from "../../images/no-image.png";
 import { FlexGrid } from "../styled";
+import { useShows } from "../../misc/custom-hooks";
 
 const ShowGrid = ({ data }) => {
+  const [starredShows, dispatchStarred] = useShows();
+
   return (
     <FlexGrid>
       {data.map(({ show }) => {
+        const isStarred = starredShows.includes(show.id);
+
+        const onStarClick = () => {
+          if (isStarred) {
+            dispatchStarred({ type: "REMOVE", showId: show.id });
+          } else {
+            dispatchStarred({ type: "ADD", showId: show.id });
+          }
+        };
+
         return (
           <ShowCard
             key={show.id}
@@ -15,6 +28,8 @@ const ShowGrid = ({ data }) => {
             lang={show.language}
             image={show.image ? show.image.medium : IMG_NOT_FOUND}
             summary={show.summary}
+            isStarred={isStarred}
+            onStarClick={onStarClick}
           />
         );
       })}
